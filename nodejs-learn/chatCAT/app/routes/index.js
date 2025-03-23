@@ -1,21 +1,21 @@
-"use strict"
-const router = require("express").Router()
+'use strict'
+const router = require('express').Router()
 module.exports = () => {
   let routes = {
-    "get": {
-      "/": (req, res, next) => {
-        res.render("login")
+    get: {
+      '/': (req, res, next) => {
+        res.render('login')
       },
-      "/rooms": (req, res, next) => {
-        res.render("rooms")
+      '/rooms': (req, res, next) => {
+        res.render('rooms')
       },
-      "/chatroom": (req, res, next) => {
-        res.render("chatroom")
+      '/chatroom': (req, res, next) => {
+        res.render('chatroom')
       },
     },
-    "post": {},
-    "NA": (req, res, next) => {
-      res.status(404).sendFile(process.cwd() + "/views/404.htm")
+    post: {},
+    NA: (req, res, next) => {
+      res.status(404).sendFile(process.cwd() + '/views/404.htm')
     },
   }
 
@@ -23,17 +23,19 @@ module.exports = () => {
   let registerRoutes = (routes, method) => {
     for (let key in routes) {
       if (
-        typeof routes[key] === "object" &&
+        typeof routes[key] === 'object' &&
         routes[key] !== null &&
         !(routes[key] instanceof Array)
       ) {
         registerRoutes(routes[key], key)
       } else {
         // Register the routes
-        if (method === "get") {
+        if (method === 'get') {
           router.get(key, routes[key])
-        } else if (method === "post") {
+        } else if (method === 'post') {
           router.post(key, routes[key])
+        } else {
+          router.use(routes[key])
         }
       }
     }
