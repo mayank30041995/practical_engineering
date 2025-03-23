@@ -7,7 +7,7 @@ app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.get('/', (req, res, next) => {
   //   res.send('<h1>Hello Express</h1>')
-  res.render('chatroom', {
+  res.render('login', {
     pageTitle: 'My Login Page',
   })
 })
