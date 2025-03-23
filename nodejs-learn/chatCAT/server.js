@@ -1,6 +1,16 @@
 'use strict'
+const express = require('express')
+const app = express()
 
-console.log('This is an app')
+app.set('port', process.env.PORT || 3000)
+app.get('/', (req, res, next) => {
+  res.send('<h1>Hello Express</h1>')
+})
 
-// npm i express@4.13.3 --save --save-exact
-// npm install --save-dev nodemon
+app.get('/dashboard', (req, res, next) => {
+  res.send('<h1>This is the dashboard page!</h1>')
+})
+
+app.listen(app.get('port'), () => {
+  console.log('ChatCAT Running on port:', app.get('port'))
+})
