@@ -1,15 +1,18 @@
 'use strict'
 const express = require('express')
-const ChatCAT = require('./app')
+const chatCat = require('./app')
+const passport = require('passport')
 const app = express()
 
 app.set('port', process.env.PORT || 3000)
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
-app.use(ChatCAT.session)
+app.use(chatCat.session)
+app.use(passport.initialize())
+app.use(passport.session())
 
-app.use('/', ChatCAT.router)
+app.use('/', chatCat.router)
 
 app.listen(app.get('port'), () => {
   console.log('ChatCAT Running on port:', app.get('port'))

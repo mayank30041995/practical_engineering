@@ -1,2 +1,4 @@
 node_modules
 package-lock.json
+# Ignore environment files
+app/config/development.json

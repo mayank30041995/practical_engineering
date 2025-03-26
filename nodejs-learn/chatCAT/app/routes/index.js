@@ -1,5 +1,8 @@
 'use strict'
-const router = require('express').Router()
+const h = require('../helpers')
+const passport = require('passport')
+const config = require('../config')
+
 module.exports = () => {
   let routes = {
     get: {
@@ -19,6 +22,11 @@ module.exports = () => {
         req.session.favColor = 'Red'
         res.send('Session set')
       },
+      '/auth/facebook': passport.authenticate('facebook'),
+      '/auth/facebook/callback': passport.authenticate('facebook', {
+        successRedirect: '/rooms',
+        failureRedirect: '/',
+      }),
     },
     post: {},
     NA: (req, res, next) => {
@@ -26,28 +34,5 @@ module.exports = () => {
     },
   }
 
-  //Iterate through the routes object and mount the routes
-  let registerRoutes = (routes, method) => {
-    for (let key in routes) {
-      if (
-        typeof routes[key] === 'object' &&
-        routes[key] !== null &&
-        !(routes[key] instanceof Array)
-      ) {
-        registerRoutes(routes[key], key)
-      } else {
-        // Register the routes
-        if (method === 'get') {
-          router.get(key, routes[key])
-        } else if (method === 'post') {
-          router.post(key, routes[key])
-        } else {
-          router.use(routes[key])
-        }
-      }
-    }
-  }
-
-  registerRoutes(routes)
-  return router
+  return h.route(routes)
 }
