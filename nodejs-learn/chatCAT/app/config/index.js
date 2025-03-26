@@ -17,3 +17,6 @@ if (process.env.NODE_ENV === 'production') {
   // Offer dev stage settings and date
   module.exports = require('./development.json')
 }
+
+// git rm --cached app/config/development.json
+// https://developers.facebook.com/apps
